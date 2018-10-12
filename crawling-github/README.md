@@ -23,3 +23,8 @@ source ./env/bin/activate
 # install required packages
 pip install -e .
 ```
+
+## Execute crawler
+```
+GIT_USER=<git_user> GIT_TOKEN=<git_token> python crawler/simple_bfs_crawler.py <output_file> <depth>
+```
