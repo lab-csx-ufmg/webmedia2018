@@ -5,7 +5,7 @@ import json
 URL_BASE = "https://api.github.com"
 #To authenticate: https://github.com/settings/developers
 GIT_USER_NAME = "usuario-git"
-AUTH_TOKEN = "5b1dbfa50f221f3486f27ae2d6f017d8d8a5b910"
+AUTH_TOKEN = None
 def request_github_api(url,data={}):
     headers = {'User-Agent': GIT_USER_NAME,#It is adviced to put the user name as the user-agent
                 "Accept": "application/vnd.github.v3+json"}
