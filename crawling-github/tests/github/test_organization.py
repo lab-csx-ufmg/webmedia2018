@@ -1,3 +1,4 @@
+import os
 import unittest
 
 from GitHubAPI import GitHubOrganization
@@ -8,34 +9,36 @@ ORGANIZATION_NAME = 'facebook'
 
 class GitHubOrganizationTest(unittest.TestCase):
     def setUp(self):
+        git_user = None
+        git_token = None
+        if os.environ.get('GIT_USER'):
+            git_user = os.environ.get('GIT_USER')
+        if os.environ.get('GIT_TOKEN'):
+            git_token = os.environ.get('GIT_TOKEN')
+
+        self.org = GitHubOrganization(ORGANIZATION_NAME, git_user=git_user, git_token=git_token)
         pass
 
     def tearDown(self):
         pass
 
     def test_info(self):
-        org = GitHubOrganization(ORGANIZATION_NAME)
-
-        assert org.info
+        assert self.org.info
         for key in FIELDS_ORGANIZATION:
-            assert key in org.info
+            assert key in self.org.info
 
     def test_public_members(self):
-        api = GitHubOrganization(ORGANIZATION_NAME)
+        assert self.org.public_members
+        assert len(self.org.public_members) > 0
 
-        assert api.public_members
-        assert len(api.public_members) > 0
-
-        assert api.public_members[0]
+        assert self.org.public_members[0]
         for key in FIELDS_USER:
-            assert key in api.public_members[0].info
+            assert key in self.org.public_members[0].info
 
     def test_repos(self):
-        api = GitHubOrganization(ORGANIZATION_NAME)
+        assert self.org.repos
+        assert len(self.org.repos) > 0
 
-        assert api.repos
-        assert len(api.repos) > 0
-
-        assert api.repos[0]
+        assert self.org.repos[0]
         for key in FIELDS_REPO:
-            assert key in api.repos[0].info
+            assert key in self.org.repos[0].info

@@ -9,17 +9,17 @@ USERNAME = 'gaearon'
 
 class GitHubUserTest(unittest.TestCase):
     def setUp(self):
+        git_user = None
+        git_token = None
+        if os.environ.get('GIT_USER'):
+            git_user = os.environ.get('GIT_USER')
+        if os.environ.get('GIT_TOKEN'):
+            git_token = os.environ.get('GIT_TOKEN')
+
+        self.user = GitHubUser(USERNAME, git_user=git_user, git_token=git_token)
         pass
 
     def tearDown(self):
-        git_user = None
-        git_token = None
-        if os.environ['GIT_USER']:
-            git_user = os.environ['GIT_USER']
-        if os.environ['GIT_TOKEN']:
-            git_token = os.environ['GIT_TOKEN']
-        
-        self.user = GitHubUser(USERNAME, git_user=git_user, git_token=git_token)
         pass
 
     def test_info(self):

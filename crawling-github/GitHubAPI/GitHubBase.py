@@ -1,6 +1,8 @@
 import requests
 import json
 
+from GitHubAPI.credentials import GIT_USER, GIT_TOKEN
+
 '''
 GitHubBase: class that is base for github requests
 '''
@@ -8,8 +10,8 @@ class GitHubBase():
     BASE_URL = "https://api.github.com"
 
     def __init__(self, user=None, token=None):
-        self.user = user
-        self.token = token
+        self.user = user or GIT_USER
+        self.token = token or GIT_TOKEN
 
     def request_api(self, url, data={}):
         headers = {}
