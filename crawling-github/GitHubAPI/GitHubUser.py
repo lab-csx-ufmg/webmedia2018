@@ -21,6 +21,7 @@ class GitHubUser(GitHubAPI.GitHubBase):
         self.__following = following
         self.__organizations = organizations
         self.__repos = repos
+        self.__repos = repos
 
     def __str__(self):
         return "GitHubUser(name={username})".format(username=self.username)
@@ -77,35 +78,14 @@ class GitHubUser(GitHubAPI.GitHubBase):
             ]
             return self.__organizations
 
-# class GitHubAPI(GitHubBase):
-#     def request_api(self, url,data={}):
-#         headers = {'User-Agent': GIT_USER_NAME}
-#         if AUTH_TOKEN :
-#             headers["Authorization"] = 'token ' + AUTH_TOKEN
-#
-#         r = requests.get(url, headers=headers)
-#         return json.loads(r.text or r.content)
-#
-#     def get_repo_from_user(self, username):
-#         return self.request_api(BASE_URL+"/users/"+username+"/repos")
-#
-#     def user_following(self, username):
-#         return self.request_api(USERS_URL.format(url=BASE_URL, username=username, endpoint="following"))
-#
-#     def get_user_followers(self, username):
-#         return self.request_api(USERS_URL.format(url=BASE_URL, username=username, endpoint="followers"))
-#
-#     def get_contributors_from_repo(self, userOwner,repoName):
-#         '''
-#         Contributor: A contributor is someone from the outside not on the core development team of the project that wants to contribute some changes to a project.
-#         https://github.com/CoolProp/CoolProp/wiki/Contributors-vs-Collaborators
-#         '''
-#         return self.request_api(BASE_URL+"/repos/"+userOwner+"/"+repoName+"/contributors")
-#
-#     def get_collaborators_from_repo(self, userOwner,repoName):
-#         '''
-#         Requires authentication
-#         Collaborator: A collaborator is someone on the core development team of the project and has commit access to the main repository of the project.
-#         https://github.com/CoolProp/CoolProp/wiki/Contributors-vs-Collaborators
-#         '''
-#         return self.request_api(BASE_URL+"/repos/"+userOwner+"/"+repoName+"/collaborators")
+    @property
+    def repos(self):
+        if self.__repos:
+            return self.__repos
+        else:
+            self.__repos = [
+                GitHubAPI.GitHubRepo(owner=info['owner'], name=info['name'], info=info)
+                for info in self.request_api(self.info['repos_url'])
+            ]
+
+            return self.__repos

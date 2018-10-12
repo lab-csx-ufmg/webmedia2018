@@ -2,7 +2,7 @@ import os
 import unittest
 
 from GitHubAPI import GitHubUser
-from fields import FIELDS_USER, FIELDS_ORGANIZATION
+from fields import FIELDS_USER, FIELDS_ORGANIZATION, FIELDS_REPO
 
 USERNAME = 'gaearon'
 
@@ -42,6 +42,14 @@ class GitHubUserTest(unittest.TestCase):
         assert self.user.following[0]
         for key in FIELDS_USER:
             assert key in self.user.following[0].info
+
+    def test_repos(self):
+        assert self.user.repos
+        assert len(self.user.repos) > 0
+
+        assert self.user.repos[0]
+        for key in FIELDS_REPO:
+            assert key in self.user.repos[0].info
 
     def test_organizations(self):
         assert self.user.organizations
