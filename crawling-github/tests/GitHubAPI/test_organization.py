@@ -9,14 +9,7 @@ ORGANIZATION_NAME = 'facebook'
 
 class GitHubOrganizationTest(unittest.TestCase):
     def setUp(self):
-        git_user = None
-        git_token = None
-        if os.environ.get('GIT_USER'):
-            git_user = os.environ.get('GIT_USER')
-        if os.environ.get('GIT_TOKEN'):
-            git_token = os.environ.get('GIT_TOKEN')
-
-        self.org = GitHubOrganization(ORGANIZATION_NAME, git_user=git_user, git_token=git_token)
+        self.org = GitHubOrganization(ORGANIZATION_NAME)
         pass
 
     def tearDown(self):

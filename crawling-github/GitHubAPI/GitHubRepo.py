@@ -25,7 +25,7 @@ class GitHubRepo(GitHubAPI.GitHubBase):
         self.__contributors = contributors
 
     def __str__(self):
-        return "GitHubRepo(name={name})".format(name=self.name)
+        return "GitHubRepo(name={full_name})".format(full_name=self.info['full_name'])
 
     @property
     def owner(self):
