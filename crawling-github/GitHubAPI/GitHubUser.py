@@ -84,8 +84,8 @@ class GitHubUser(GitHubAPI.GitHubBase):
             return self.__repos
         else:
             self.__repos = [
-                GitHubAPI.GitHubRepo(owner=info['owner'], name=info['name'], info=info)
-                for info in self.request_api(self.info['repos_url'])
+                GitHubAPI.GitHubRepo(owner=repo['owner'], name=repo['name'], info=repo)
+                for repo in self.request_api(self.info['repos_url'])
             ]
 
             return self.__repos

@@ -55,8 +55,8 @@ class GitHubRepo(GitHubAPI.GitHubBase):
             return self.__contributors
         else:
             self.__contributors = [
-                GitHubAPI.GitHubUser(info['login'], info)
-                for info in self.request_api(self.info['contributors_url'].replace('{/collaborator}', ''))
+                GitHubAPI.GitHubUser(cont['login'], cont)
+                for cont in self.request_api(self.info['contributors_url'])
             ]
 
             return self.__contributors

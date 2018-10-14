@@ -11,8 +11,8 @@ class GitHubBase():
     BASE_URL = "https://api.github.com"
 
     def __init__(self, user=None, token=None):
-        self.user = user or os.environ['GIT_USER'] or GIT_USER
-        self.token = token or os.environ['GIT_TOKEN'] or GIT_TOKEN
+        self.user = user or ('GIT_USER' in os.environ and os.environ['GIT_USER']) or GIT_USER
+        self.token = token or ('GIT_TOKEN' in os.environ and os.environ['GIT_TOKEN']) or GIT_TOKEN
 
     def request_api(self, url, data={}):
         headers = {}
