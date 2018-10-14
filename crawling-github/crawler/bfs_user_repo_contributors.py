@@ -4,9 +4,8 @@ from collections import deque
 
 class BFSUserRepoContributors():
     def __init__(self, seeds):
-        self.users = [(GitHubUser(username), 0) for username in seeds]
-        self.queue = deque(self.users)
-        self.users_crawled = set()
+        self.queue = deque([(GitHubUser(username), 0) for username in seeds])
+        self.discovered_users = set(seeds)
 
     def write_edges(self, file, repo):
         if(len(repo.contributors) <= 1):
@@ -20,24 +19,16 @@ class BFSUserRepoContributors():
                 ))
 
     def perform_crawl(self, output, maxDepth):
-        '''
-            Crawl the collaboration network usining breath first search (BFS) by walking through:
-                users => his/her repos => repos contributors
-            which represent one depth level of BFS
-        '''
-
         with open(output,"w") as file:
             while len(self.queue) > 0:
                 # dequeue de first user
                 user, curDepth = self.queue.popleft()
-                print("Crawling {user}, Repos: {nun_repos}, Queue size: {queue_size}".format(
+                print("Crawling {user}, Repos: {num_repos}, Queue size: {queue_size}".format(
                     user=user,
-                    nun_repos=len(user.repos),
+                    num_repos=len(user.repos),
                     queue_size=len(self.queue)
                 ))
-
-                # ensure that user will not be collected again
-                self.users_crawled.add(user.username)
+                print("QUEUE: {queue}".format(queue=[(user.username,depth) for user,depth in self.queue]))
 
                 # for each repo of the current user
                 for repo in user.repos:
@@ -48,12 +39,14 @@ class BFSUserRepoContributors():
 
                     # write edge between all collaborators
                     self.write_edges(file, repo)
-
                     # verify if will keep walking
-                    if curDepth + 1 < maxDepth:
+                    if curDepth + 1 <= maxDepth:
+                        #add contributors to the queue
                         for nextUser in repo.contributors:
-                            if nextUser not in self.users_crawled:
-                                self.queue.append(nextUser)
+                            if nextUser.username not in self.discovered_users:
+                                self.queue.append((nextUser,curDepth + 1,))
+                                # ensure that user will not be added again
+                                self.discovered_users.add(nextUser.username)
 
 if __name__ == "__main__":
     if len(sys.argv) < 3 or not int(sys.argv[2]):
