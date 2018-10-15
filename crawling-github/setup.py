@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='crawling-github',
-    packages=['crawler', 'GitHubAPI'],
+    packages=['crawler', 'GitHubAPI', 'twitter'],
     include_package_data=True,
     install_requires=[
         'wheel',
