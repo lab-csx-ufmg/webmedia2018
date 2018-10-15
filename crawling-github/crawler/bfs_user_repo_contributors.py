@@ -40,11 +40,11 @@ class BFSUserRepoContributors():
                     # write edge between all collaborators
                     self.write_edges(file, repo)
                     # verify if will keep walking
-                    if curDepth + 1 <= maxDepth:
+                    if curDepth + 1 < maxDepth:
                         #add contributors to the queue
                         for nextUser in repo.contributors:
                             if nextUser.username not in self.discovered_users:
-                                self.queue.append((nextUser,curDepth + 1,))
+                                self.queue.append((nextUser, curDepth + 1))
                                 # ensure that user will not be added again
                                 self.discovered_users.add(nextUser.username)
 

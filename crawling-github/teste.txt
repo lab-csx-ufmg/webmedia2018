@@ -1,0 +1,11 @@
+fegemo, daniel-hasan, daniel-hasan/cefet-nosql
+fegemo, daniel-hasan, daniel-hasan/cefet-web
+fegemo, daniel-hasan, daniel-hasan/cefet-web-coral55
+fegemo, daniel-hasan, daniel-hasan/cefet-web-grad
+fegemo, daniel-hasan, daniel-hasan/cefet-web-ninjas
+fegemo, daniel-hasan, daniel-hasan/cefet-web-piranha-plant
+fegemo, daniel-hasan, daniel-hasan/cefet-web-space
+fegemo, daniel-hasan, daniel-hasan/cefet-web-starwars
+daniel-hasan, fegemo, daniel-hasan/cefet-web-unicorns
+monicakarine, daniel-hasan, daniel-hasan/matematica-discreta
+AlineCristinaPinto, daniel-hasan, daniel-hasan/minicurso-django

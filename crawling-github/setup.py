@@ -2,14 +2,17 @@ from setuptools import setup
 
 setup(
     name='crawling-github',
-    packages=['crawler'],
+    packages=['crawler', 'GitHubAPI'],
     include_package_data=True,
     install_requires=[
+        'wheel',
         'urllib3',
         'requests',
         'certifi',
         'chardet',
         'idna',
+        'tweepy',
+        'networkx'
     ],
     setup_requires=[
         'pytest-runner',
