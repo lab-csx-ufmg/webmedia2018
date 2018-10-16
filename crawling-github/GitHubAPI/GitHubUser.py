@@ -21,7 +21,6 @@ class GitHubUser(GitHubAPI.GitHubBase):
         self.__following = following
         self.__organizations = organizations
         self.__repos = repos
-        self.__repos = repos
 
     def __str__(self):
         return "GitHubUser(name={username})".format(username=self.username)
