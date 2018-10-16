@@ -43,21 +43,12 @@ class BFSCrawler():
                     self.twitter_edges.append(GitTwitterEdge(source=gitKey, target=tUser['id']))
 
         # get all friendships
-        # twitter_ids = [k for k in self.twitter_nodes.items()]
-        # following_common = {}
-        # for follower_id in twitter_ids:
-        #     following = self.api.friends_ids(follower_id)
-        #     print(follower_id in self.twitter_nodes)
-        #     self.twitter_nodes[follower_id].properties['following'] = following
-        #     for followed_id in following:
-        #         following_common[str(followed_id)] = (following_common[str(followed_id)] or 0) + 1
-        #
-        # # get all common friends
-        # following_common = [id for id, cnt in following_common.items() if cnt > 1]
-        # for follower_id in twitter_ids:
-        #     for followed_id in self.twitter_nodes[follower_id].properties['following']:
-        #         if followed_id in following_common:
-        #             self.twitter_edges.append(TwitterEdgeFollowing(source=follower_id, target=followed_id))
+        twitter_ids = [k for k in self.twitter_nodes.items()]
+        for follower_id in twitter_ids:
+            following = [str(id) for id in self.api.friends_ids(follower_id)]
+            git_hub_friends = [id for id in twitter_ids if id in following]
+            for followed_id in git_hub_friends:
+                self.twitter_edges.append(TwitterEdgeFollowing(source=follower_id, target=followed_id))
 
         # write results
         with open(output, 'w') as file:
@@ -76,7 +67,7 @@ class BFSCrawler():
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print("Correct use:")
-        print("GIT_USER=<git_user> GIT_TOKEN=<git_token> python bfs_crawler.py <input_file> <output_file>")
+        print("python bfs_crawler.py <input_file> <output_file>")
         sys.exit(0)
 
     crawler = BFSCrawler()
