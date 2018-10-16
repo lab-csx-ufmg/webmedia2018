@@ -22,4 +22,6 @@ class GitHubBase():
             headers["Authorization"] = "token {token}".format(token=self.token)
 
         r = requests.get(url, headers=headers)
-        return json.loads(r.text or r.content)
+        if 'application/json' in r.headers.get('content-type'):
+            return json.loads(r.text or r.content)
+        return {}
